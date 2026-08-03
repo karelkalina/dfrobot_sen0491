@@ -1,0 +1,74 @@
+substitutions:
+  devicename: atomlite-distance
+
+esphome:
+  name: $devicename
+  name_add_mac_suffix: true
+  platformio_options:
+    build_flags:
+      - -D CORE_DEBUG_LEVEL=0
+      - -D ARDUINO_LOG_LEVEL=0
+
+esp32:
+  board: m5stack-atom
+
+uart:
+  id: uart_bus
+  tx_pin: GPIO26 # Replace with your actual TX pin
+  rx_pin: GPIO32 # Replace with your actual RX pin
+  baud_rate: 115200
+
+modbus:
+  id: modbus1
+  uart_id: uart_bus
+
+modbus_controller:
+  - id: sen0491
+    address: 0x50 # Default Modbus address for the SEN0491
+    modbus_id: modbus1
+    update_interval: 1s # Adjust based on how fast you need data published
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: sen0491
+    name: "SEN0491 Distance"
+    id: distance_m
+    register_type: holding
+    address: 0x34 # Register containing the distance measurement
+    value_type: U_WORD # 16-bit unsigned integer
+    unit_of_measurement: "m"
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001 # Converts the raw millimeter output to meters
+
+wifi:
+  reboot_timeout: 15min
+  output_power: 15dB
+  power_save_mode: none
+  ap:
+  manual_ip:
+    static_ip: 192.168.105.67
+    gateway: 192.168.105.123
+    subnet: 255.255.255.0
+    dns1: 8.8.8.8
+
+captive_portal:
+
+improv_serial:
+
+logger:
+  level: DEBUG
+  logs:
+    sensor: WARN
+    text_sensor: WARN
+
+api:
+  reboot_timeout: 0s
+
+ota:
+  - platform: esphome
+
+web_server:
+  include_internal: false
+  version: 3
+
