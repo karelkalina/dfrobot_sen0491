@@ -21,7 +21,7 @@ class DFRobotSEN0491Component : public Component, public uart::UARTDevice {
 
   sensor::Sensor *distance_sensor_{nullptr};
 
-  static const uint8_t FRAME_SIZE = 16;
+  static const uint8_t FRAME_SIZE = 34;
   uint8_t buffer_[FRAME_SIZE];
   uint8_t buffer_index_{0};
   bool header_found_{false};
