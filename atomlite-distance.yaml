@@ -12,34 +12,22 @@ esphome:
 esp32:
   board: m5stack-atom
 
+external_components:
+  - source: components
+
 uart:
-  id: uart_bus
-  tx_pin: GPIO26 # Replace with your actual TX pin
-  rx_pin: GPIO32 # Replace with your actual RX pin
+  id: uart_sensor
+  tx_pin: GPIO26
+  rx_pin: GPIO32
   baud_rate: 115200
-
-modbus:
-  id: modbus1
-  uart_id: uart_bus
-
-modbus_controller:
-  - id: sen0491
-    address: 0x50 # Default Modbus address for the SEN0491
-    modbus_id: modbus1
-    update_interval: 1s # Adjust based on how fast you need data published
+dfrobot_sen0491:
+  uart_id: uart_sensor
 
 sensor:
-  - platform: modbus_controller
-    modbus_controller_id: sen0491
-    name: "SEN0491 Distance"
-    id: distance_m
-    register_type: holding
-    address: 0x34 # Register containing the distance measurement
-    value_type: U_WORD # 16-bit unsigned integer
-    unit_of_measurement: "m"
-    accuracy_decimals: 3
-    filters:
-      - multiply: 0.001 # Converts the raw millimeter output to meters
+  - platform: dfrobot_sen0491
+    distance:
+      name: Distance
+      id: distance
 
 wifi:
   reboot_timeout: 15min
@@ -72,3 +60,5 @@ web_server:
   include_internal: false
   version: 3
 
+safe_mode:
+  disabled: true
