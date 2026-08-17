@@ -17,8 +17,8 @@ external_components:
 
 uart:
   id: uart_sensor
-  tx_pin: GPIO26
-  rx_pin: GPIO32
+  tx_pin: GPIO32
+  rx_pin: GPIO26
   baud_rate: 115200
 dfrobot_sen0491:
   uart_id: uart_sensor
@@ -33,12 +33,10 @@ wifi:
   reboot_timeout: 15min
   output_power: 15dB
   power_save_mode: none
-  ap:
   manual_ip:
-    static_ip: 192.168.105.67
-    gateway: 192.168.105.123
+    static_ip: 192.168.7.218
     subnet: 255.255.255.0
-    dns1: 8.8.8.8
+    gateway: 192.168.7.1
 
 captive_portal:
 
@@ -48,7 +46,6 @@ logger:
   level: DEBUG
   logs:
     sensor: WARN
-    text_sensor: WARN
 
 api:
   reboot_timeout: 0s

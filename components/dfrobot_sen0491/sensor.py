@@ -22,7 +22,7 @@ CONFIG_SCHEMA = cv.Schema(
         cv.Optional(CONF_DISTANCE): sensor.sensor_schema(
             device_class=DEVICE_CLASS_DISTANCE,
             state_class=STATE_CLASS_MEASUREMENT,
-            unit_of_measurement=UNIT_METER, # Adjust this unit to match the SEN0491 output
+            unit_of_measurement=UNIT_METER, 
         ),
     }
 )
