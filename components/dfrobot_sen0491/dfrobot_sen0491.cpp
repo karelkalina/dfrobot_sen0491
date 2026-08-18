@@ -34,9 +34,7 @@ namespace dfrobot_sen0491 {
             this->buffer_[buffer_index_++] = ch;
             this->parse_state_ = 2; 
           }else{
-            this->parse_state_ = 0;
-            this->buffer_index_ = 0;
-            std::fill(this->buffer_, this->buffer_+this->FRAME_SIZE, ' ');
+            this->reset_buffer();
           }
           break;
         case(2):
@@ -44,29 +42,34 @@ namespace dfrobot_sen0491 {
             this->buffer_[buffer_index_++] = ch;
             this->parse_state_ = 3;
           }else{
-            this->parse_state_ = 0;
-            this->buffer_index_ = 0;
-            std::fill(this->buffer_, this->buffer_+this->FRAME_SIZE, ' ');
+            this->reset_buffer();
           }
           break;
         case(3):
           if(this->buffer_index_ < this->FRAME_SIZE){
             this->buffer_[buffer_index_++] = ch;
-          }if (this->buffer_index_ == this->FRAME_SIZE){
+          }
+          if (this->buffer_index_ == this->FRAME_SIZE){
             std::string output = buff_to_string();     
             int dist = str_to_dist(output);
-            this->distance_sensor_->publish_state(dist);
+            int signal_status = str_to_sigs(output);
+            if (this->distance_sensor_ != nullptr) {
+              this->distance_sensor_->publish_state(dist);
+            }
+            if (this->signal_status_sensor_ != nullptr) {
+              this->signal_status_sensor_->publish_state(signal_status);
+            }
+            
+            /*
+            debug logging */
             ESP_LOGD(TAG, "%s", output.c_str());
-            this->parse_state_ = 0;
-            this->buffer_index_ = 0;
-            std::fill(this->buffer_, this->buffer_+this->FRAME_SIZE, ' ');
+           
+            this->reset_buffer();
 
           }
           break;
         default:
-          this->parse_state_ = 0;
-          this->buffer_index_ = 0;
-          std::fill(this->buffer_, this->buffer_+this->FRAME_SIZE, '\0');
+          this->reset_buffer();
           break;
       }
     }
@@ -86,10 +89,26 @@ namespace dfrobot_sen0491 {
     return out;
   }
   int DFRobotSEN0491Component::str_to_dist(std::string str){
-    int dist;
+    int dist = 0;
     int start_idx = 33;
-    dist = atoi(str.substr(start_idx, 4).c_str());
+    if (str.length() >= start_idx + 4) {
+      dist = atoi(str.substr(start_idx, 4).c_str());
+    }
     return dist;
   }
+  int DFRobotSEN0491Component::str_to_sigs(std::string str){
+    int sig_stat = 1;
+    std::string substr = "Range Valid";
+    if (str.find(substr) != std::string::npos) {
+      sig_stat = 0;
+    }
+    return sig_stat;
+  }
+  void DFRobotSEN0491Component::reset_buffer(){
+    this->parse_state_ = 0;
+    this->buffer_index_ = 0;
+    std::fill(this->buffer_, this->buffer_+this->FRAME_SIZE, '\0');
+  }
+
 }  // namespace dfrobot_sen0491
 }  // namespace esphome

@@ -17,13 +17,16 @@ class DFRobotSEN0491Component : public Component, public uart::UARTDevice {
   float get_setup_priority() const override { return setup_priority::DATA; }
 
   void set_distance_sensor(sensor::Sensor *sensor) { distance_sensor_ = sensor; }
-
+  void set_signal_status_sensor(sensor::Sensor *sensor) { signal_status_sensor_ = sensor; }
+  
   std::string buff_to_string();
 
   int str_to_dist(std::string str);
+  int str_to_sigs(std::string str);
+  void reset_buffer();
 
   sensor::Sensor *distance_sensor_{nullptr};
-
+  sensor::Sensor *signal_status_sensor_{nullptr};
   static const uint8_t FRAME_SIZE = 41;
   uint8_t buffer_[FRAME_SIZE];
   uint8_t buffer_index_{0};
