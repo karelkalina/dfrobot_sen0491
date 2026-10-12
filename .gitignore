@@ -1,0 +1,7 @@
+.esphome/
+.pixi/
+__pycache__/
+*.pyc
+ros_node/build/
+ros_node/install/
+ros_node/log/

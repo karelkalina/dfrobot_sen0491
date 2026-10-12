@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 import os
 from glob import glob
 
-package_name = 'sen0311_driver'
+package_name = 'sen0491_driver'
 
 setup(
     name=package_name,
@@ -17,12 +17,12 @@ setup(
     zip_safe=True,
     maintainer='user',
     maintainer_email='user@example.com',
-    description='ROS2 node for SEN0311 distance sensor over HTTP',
+    description='ROS2 node for SEN0491 distance sensor over HTTP',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'sen0311_node = sen0311_driver.sen0311_node:main',
+            'sen0491_node = sen0491_driver.sen0491_node:main',
         ],
     },
 )
