@@ -25,18 +25,18 @@ dfrobot_sen0491:
 sensor:
   - platform: dfrobot_sen0491
     distance:
-      name: Distance
+      name: distance
       id: distance
       internal: true
       unit_of_measurement: "mm"
     signal_status:
-      name: Signal status
+      name: signal status
       id: signal_status
       internal: true
 
 text_sensor:
   - platform: template
-    name: Paired Sensor Data
+    name: paired sensor data
     id: data      
     update_interval: 500ms
     lambda: |-
