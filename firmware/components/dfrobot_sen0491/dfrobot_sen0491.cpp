@@ -14,7 +14,6 @@ namespace dfrobot_sen0491 {
 
   void DFRobotSEN0491Component::dump_config() {
     ESP_LOGCONFIG(TAG, "DFRobot SEN0491:");
-    this->check_uart_settings(115200);
   }
 
   void DFRobotSEN0491Component::loop() {
