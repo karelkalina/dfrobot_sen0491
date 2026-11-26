@@ -58,9 +58,10 @@ wifi:
   output_power: 15dB
   power_save_mode: none
   manual_ip:
-    static_ip: 192.168.105.67
-    subnet: 255.255.255.0
-    gateway: 192.168.105.123
+    static_ip: !secret static_ip
+    gateway: !secret gateway
+    subnet: !secret subnet
+    dns1: !secret dns1
 
 captive_portal:
 
