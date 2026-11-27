@@ -1,9 +1,12 @@
 # SEN0491 Distance Sensor
 
-This repository contains the configuration and ROS 2 driver for the SEN0491 distance sensor.
+This repository contains the configuration and ROS 2 driver for the [SEN0491 distance sensor](https://www.dfrobot.com/product-2377.html), 4m, UART.
 
 ## Directory Structure
-- `firmware/`: Contains the ESPHome configuration (`atomlite-distance.yaml`) and related files for the [Atom Lite board](https://shop.m5stack.com/products/atom-lite-esp32-development-kit) with [Grove cable](https://docs.m5stack.com/en/accessory/cable/grove_cable) to the SEN0491 sensor.
+- `firmware/`: Contains the ESPHome configuration (`atomlite-distance.yaml`)
+  and related files for the [Atom Lite board](https://shop.m5stack.com/products/atom-lite-esp32-development-kit)
+  with [Grove cable](https://docs.m5stack.com/en/accessory/cable/grove_cable) to the
+  SEN0491 sensor.
 
 - `ros_node/`: Contains the `sen0491_driver` ROS 2 package to interface with the sensor over HTTP.
 
