@@ -6,14 +6,14 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks]
-compile = "esphome compile firmware/atomlite-distance.yaml"
-upload = "esphome upload firmware/atomlite-distance.yaml"
-run = "esphome run firmware/atomlite-distance.yaml"
-logs = "esphome logs firmware/atomlite-distance.yaml"
-clean = "esphome clean firmware/atomlite-distance.yaml"
+compile = "esphome compile atomlite-distance.yaml"
+upload = "esphome upload atomlite-distance.yaml"
+run = "esphome run atomlite-distance.yaml"
+logs = "esphome logs atomlite-distance.yaml"
+clean = "esphome clean atomlite-distance.yaml"
 
 [dependencies]
 python = ">=3.14.6,<3.15"
 
 [pypi-dependencies]
-esphome = ">=2026.7.3, <2027"
+esphome = "==2026.11.1"

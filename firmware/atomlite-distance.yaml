@@ -7,9 +7,13 @@ esphome:
   build_flags:
     - -D CORE_DEBUG_LEVEL=0
     - -D ARDUINO_LOG_LEVEL=0
+  platformio_options:
+    upload_speed: 115200
 
 esp32:
   board: m5stack-atom
+  framework:
+    type: esp-idf # or arduino
 
 external_components:
   - source: components
@@ -37,7 +41,7 @@ sensor:
 text_sensor:
   - platform: template
     name: paired sensor data
-    id: data      
+    id: data
     update_interval: 500ms
     lambda: |-
       if (id(distance).has_state() && id(signal_status).has_state()) {
@@ -49,7 +53,7 @@ text_sensor:
         );
       } else {
         return std::string("{\"status\": \"booting\"}");
-      }  
+      }
 
 wifi:
   ssid: !secret wifi_ssid
@@ -57,10 +61,12 @@ wifi:
   reboot_timeout: 15min
   output_power: 15dB
   power_save_mode: none
+  ap:
   manual_ip:
-    static_ip: 192.168.105.67
-    subnet: 255.255.255.0
-    gateway: 192.168.105.123
+    static_ip: !secret static_ip
+    gateway: !secret gateway
+    subnet: !secret subnet
+    dns1: !secret dns1
 
 captive_portal:
 

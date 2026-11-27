@@ -17,6 +17,14 @@ CONFIG_SCHEMA = cv.Schema({
     # Schema definition, containing the options available for the component
 }).extend(cv.COMPONENT_SCHEMA).extend(uart.UART_DEVICE_SCHEMA)
 
+FINAL_VALIDATE_SCHEMA = uart.final_validate_device_schema(
+    "dfrobot_sen0491",
+    baud_rate=115200,
+    data_bits=8,
+    parity="NONE",
+    stop_bits=1,
+)
+
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
